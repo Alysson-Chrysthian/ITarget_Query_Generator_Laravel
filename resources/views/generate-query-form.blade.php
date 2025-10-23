@@ -25,6 +25,7 @@
                 >
                     <option value="S2200" selected>S2200</option>
                     <option value="S1200">S1200</option>
+                    <option value="S1210">S1210</option>
                 </x-select-input>
                 @error('eventName')
                     <x-error>{{ $message }}</x-error>
@@ -59,7 +60,7 @@
                 <x-file-input
                     name="xmls[]"
                     id="xmls-input"
-                    label="Selecione os xmls do s2200"
+                    label="Selecione os xmls do evento"
                 />
                 @error('xmls')
                     <x-error>{{ $message }}</x-error>         
