@@ -7,7 +7,7 @@ use Illuminate\Contracts\Validation\ValidationRule;
 
 class Cnpj implements ValidationRule
 {
-    private const cnpjRegex = '^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$';
+    private const cnpjRegex = '#^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$#';
 
     /**
      * Run the validation rule.
