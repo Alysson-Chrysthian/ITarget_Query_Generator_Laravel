@@ -16,6 +16,32 @@
             action="{{ route('s1200.generate-query') }}"
             enctype="multipart/form-data"
         >
+            @csrf
+            <div class="flex flex-col gap-2">
+                <x-text-input
+                    name="cpfs"
+                    id="cpfs-input"
+                    label="CPF's para filtrar os XML's"
+                    value="{{ old('cpfs') }}"
+                    placeholder="CPF's separados por virgula Ex: 11122233300,11122233300..."
+                />
+                @error('cpfs')
+                    <x-error>{{ $message }}</x-error>         
+                @enderror
+            </div>
+            <div class="flex flex-col gap-2">    
+                <x-text-input
+                    name="cnpj"
+                    id="cnpj-input"
+                    label="CNPJ*"
+                    placeholder="CNPJ"
+                    value="{{ old('cnpj') }}"
+                    data-inputmask="'mask': '99.999.999/9999-99'"
+                />
+                @error('cnpj')
+                    <x-error>{{ $message }}</x-error>         
+                @enderror
+            </div>
             <div class="flex flex-col gap-2">
                 <x-file-input
                     name="xmls[]"

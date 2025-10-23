@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Storage;
 
 class s2200Controller extends Controller
 {
+    public $evento = 'S2200';
+
     public function generateQuery(Request $request)
     {
         $request->validate([
@@ -30,7 +32,7 @@ class s2200Controller extends Controller
                 continue;
 
             $s2200Query = $this->generateS2200Query($xmlObject);
-            $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj);
+            $historicoQuery = $this->generateHistoricoQuery($xmlObject, str_replace(['-', '/', '.'], '', $request->cnpj));
             $s2200DependenteQuery = null;
 
             if ($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->trabalhador->dependente)
@@ -56,7 +58,7 @@ class s2200Controller extends Controller
         $vinculo = $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->vinculo;
 
         // table cols
-        $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->{'@attributes'}->Id ?? "null");
+        $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->attributes()['Id'] ?? "null");
         $indretif = $this->addQuotesWhenNotNull($ideevento->indRetif ?? "null");
         $nrrecibo = "null";
         if ($indretif == 2)
@@ -180,29 +182,6 @@ class s2200Controller extends Controller
         $query = "INSERT INTO esocial.s2200 (idevento, indretif, nrrecibo, tpamb, procemi, verproc, tpinsc, nrinsc, cpftrab, nmtrab, sexo, racacor, estciv, grauinstr, nmsoc, dtnascto, paisnascto, paisnac, tplograd, dsclograd, nrlograd, complemento, bairro, cep, codmunic, uf, tmpresid, conding, deffisica, defvisual, defauditiva, defmental, defintelectual, reabreadap, infocota, observacao_infodeficiencia, foneprinc, emailprinc, matricula, tpregtrab, tpregprev, cadini, dtadm, tpadmissao, indadmissao, nrproctrab, tpregjor, natatividade, dtbase, cnpjsindcategprof, dtopcfgts, hipleg, justcontr, tpinsc_ideestabvinc, nrinsc_ideestabvinc, tpinsc_aprend, nrinsc_aprend, tpprov, dtexercicio, tpplanrp, indtetorgps, indabonoperm, dtiniabono, nmcargo, cbocargo, dtingrcargo, nmfuncao, cbofuncao, acumcargo, codcateg, vrsalfx, undsalfixo, dscsalvar, tpcontr, dtterm, clauassec, objdet, tpinsc_localtrabgeral, nrinsc_localtrabgeral, desccomp_localtrabgeral, tplograd_localtempdom, dsclograd_localtempdom, nrlograd_localtempdom, complemento_localtempdom, bairro_localtempdom, cep_localtempdom, codmunic_localtempdom, uf_localtempdom, qtdhrssem, tpjornada, tmpparc, hornoturno, dscjorn, nrprocjud, tpinsc_sucessaovinc, nrinsc_sucessaovinc, matricant_sucessaovinc, dttransf_sucessaovinc, observacao_sucessaovinc, cpfant, matricant, dtaltcpf, observacao_mudancacpf, dtiniafast, codmotafast, dtdeslig, dtinicessao, situacao, tipo, criado_por, alterado_por, matanotjud, indaprend, cnpjentqual, cnpjprat)\n"
             . "VALUES($idevento, $indretif, $nrrecibo, $tpamb, $procemi, $verproc, $tpinsc, $nrinsc, $cpftrab, $nmtrab, $sexo, $racacor, $estciv, $grauinstr, $nmsoc, $dtnascto, $paisnascto, $paisnac, $tplograd, $dsclograd, $nrlograd, $complemento, $bairro, $cep, $codmunic, $uf, $tmpresid, $conding, $deffisica, $defvisual, $defauditiva, $defmental, $defintelectual, $reabreadap, $infocota, $observacao_infodeficiencia, $foneprinc, $emailprinc, $matricula, $tpregtrab, $tpregprev, $cadini, $dtadm, $tpadmissao, $indadmissao, $nrproctrab, $tpregjor, $natatividade, $dtbase, $cnpjsindcategprof, $dtopcfgts, $hipleg, $justcontr, $tpinsc_ideestabvinc, $nrinsc_ideestabvinc, $tpinsc_aprend, $nrinsc_aprend, $tpprov, $dtexercicio, $tpplanrp, $indtetorgps, $indabonoperm, $dtiniabono, $nmcargo, $cbocargo, $dtingrcargo, $nmfuncao, $cbofuncao, $acumcargo, $codcateg, $vrsalfx, $undsalfixo, $dscsalvar, $tpcontr, $dtterm, $clauassec, $objdet, $tpinsc_localtrabgeral, $nrinsc_localtrabgeral, $desccomp_localtrabgeral, $tplograd_localtempdom, $dsclograd_localtempdom, $nrlograd_localtempdom, $complemento_localtempdom, $bairro_localtempdom, $cep_localtempdom, $codmunic_localtempdom, $uf_localtempdom, $qtdhrssem, $tpjornada, $tmpparc, $hornoturno, $dscjorn, $nrprocjud, $tpinsc_sucessaovinc, $nrinsc_sucessaovinc, $matricant_sucessaovinc, $dttransf_sucessaovinc, $observacao_sucessaovinc, $cpfant, $matricant, $dtaltcpf, $observacao_mudancacpf, $dtiniafast, $codmotafast, $dtdeslig, $dtinicessao, $situacao, $tipo, $criado_por, $alterado_por, $matanotjud, $indaprend, $cnpjentqual, $cnpjprat);";
     
-        return $query;
-    }
-
-    public function generateHistoricoQuery($xmlObject, $cnpj)
-    {
-        $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->{'@attributes'}->Id ?? "null");
-        $protocolo = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recepcao->protocoloEnvioLote ?? "null");
-        $cnpj = "'" . $cnpj . "'";
-        $nr_recibo = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recibo->nrRecibo ?? "null");
-        
-        //CAMPOS FIXOS
-        $evento = "'"."S2200"."'";
-        $status = "'"."P"."'";
-        $criado_por = 1;
-        $alterado_por = 1;
-        $message = "'201 - Lote processado com sucesso.  - '";
-
-        $insertQuery = "INSERT INTO esocial.historico (idevento, evento, status, criado_por, alterado_por, message, protocolo, cnpj, nr_recibo)\n"
-            . "VALUES ($idevento, $evento, $status, $criado_por, $alterado_por, $message, $protocolo, $cnpj, $nr_recibo);";
-        $updateQuery = "UPDATE esocial.historico h SET evento_id = s.id FROM esocial.s2200 s WHERE h.evento = 'S2200' AND h.idevento = s.idevento;";
-        
-        $query = $insertQuery . " " . $updateQuery;
-
         return $query;
     }
 

@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 abstract class Controller
 {
+    public $evento = "";
+
     protected function addQuotesWhenNotNull($value)
     {
         if ($value != "null")
@@ -11,4 +13,28 @@ abstract class Controller
 
         return $value;
     }
+
+    public function generateHistoricoQuery($xmlObject, $cnpj)
+    {
+        $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->attributes()['Id'] ?? "null");
+        $protocolo = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recepcao->protocoloEnvioLote ?? "null");
+        $cnpj = "'" . $cnpj . "'";
+        $nr_recibo = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recibo->nrRecibo ?? "null");
+        
+        //CAMPOS FIXOS
+        $evento = "'". $this->evento ."'";
+        $status = "'"."P"."'";
+        $criado_por = 1;
+        $alterado_por = 1;
+        $message = "'201 - Lote processado com sucesso.  - '";
+
+        $insertQuery = "INSERT INTO esocial.historico (idevento, evento, status, criado_por, alterado_por, message, protocolo, cnpj, nr_recibo)\n"
+            . "VALUES ($idevento, $evento, $status, $criado_por, $alterado_por, $message, $protocolo, $cnpj, $nr_recibo);";
+        $updateQuery = "UPDATE esocial.historico h SET evento_id = s.id FROM esocial.s2200 s WHERE h.evento = 'S2200' AND h.idevento = s.idevento;";
+        
+        $query = $insertQuery . " " . $updateQuery;
+
+        return $query;
+    }
+    
 }
