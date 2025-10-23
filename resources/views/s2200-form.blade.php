@@ -5,6 +5,11 @@
 @section('main')
     <div class="max-w-100 flex flex-col gap-4 m-auto">
         <h1>s2200</h1>
+
+        <div class="text-green-600">
+            {{ session()->get('message') }}
+        </div>
+
         <form
             class="flex flex-col gap-6"
             method="POST"
