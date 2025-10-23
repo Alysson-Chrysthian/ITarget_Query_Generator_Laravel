@@ -17,6 +17,7 @@
                     name="cpfs"
                     id="cpfs-input"
                     label="CPF's para filtrar os XML's"
+                    value="{{ old('cpfs') }}"
                     placeholder="CPF's separados por virgula Ex: 11122233300,11122233300..."
                 />
                 @error('cpfs')
@@ -29,6 +30,8 @@
                     id="cnpj-input"
                     label="CNPJ*"
                     placeholder="CNPJ"
+                    value="{{ old('cnpj') }}"
+                    data-inputmask="'mask': '99.999.999/9999-99'"
                 />
                 @error('cnpj')
                     <x-error>{{ $message }}</x-error>         
