@@ -1,0 +1,11 @@
+<div class="flex flex-col gap-2">
+    <label for="{{ $attributes->get('id') }}">{{ $attributes->get('label') }}</label>
+    <input 
+        type="file" 
+        name="{{ $attributes->get('name') }}" 
+        id="{{ $attributes->get('id') }}"
+        multiple
+        class="p-2 border-1 border-gray-600 rounded-md"
+    >
+    <x-error>{{ $attributes->get('error') }}</x-error>
+</div>
