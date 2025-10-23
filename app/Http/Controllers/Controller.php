@@ -30,7 +30,7 @@ abstract class Controller
 
         $insertQuery = "INSERT INTO esocial.historico (idevento, evento, status, criado_por, alterado_por, message, protocolo, cnpj, nr_recibo)\n"
             . "VALUES ($idevento, $evento, $status, $criado_por, $alterado_por, $message, $protocolo, $cnpj, $nr_recibo);";
-        $updateQuery = "UPDATE esocial.historico h SET evento_id = s.id FROM esocial.s2200 s WHERE h.evento = 'S2200' AND h.idevento = s.idevento;";
+        $updateQuery = "UPDATE esocial.historico h SET evento_id = s.id FROM esocial.". strtolower($this->evento) ." s WHERE h.evento = '{$this->evento}' AND h.idevento = s.idevento;";
         
         $query = $insertQuery . " " . $updateQuery;
 
