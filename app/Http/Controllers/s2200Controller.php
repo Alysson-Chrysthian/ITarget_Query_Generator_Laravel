@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Rules\Cnpj;
 use Illuminate\Http\Request;
 
 class s2200Controller extends Controller
@@ -10,7 +11,7 @@ class s2200Controller extends Controller
     {
         $request->validate([
             'cpfs' => ['nullable'],
-            'cnpj' => ['required'],
+            'cnpj' => ['required', new Cnpj],
             'xmls' => ['required', 'array'], 
             'xmls.*' => ['required', 'file'], 
         ]);
