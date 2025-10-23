@@ -7,7 +7,11 @@
         <h1>s2200</h1>
         <form
             class="flex flex-col gap-2"
+            method="POST"
+            action="{{ route('s2200.generate-query') }}"
+            enctype="multipart/form-data"
         >
+            @csrf
             <x-text-input
                 name="cpfs"
                 id="cpfs-input"
@@ -21,7 +25,7 @@
                 placeholder="CNPJ"
             />
             <x-file-input
-                name="xmls"
+                name="xmls[]"
                 id="xmls-input"
                 label="Selecione os xmls do s2200"
             />

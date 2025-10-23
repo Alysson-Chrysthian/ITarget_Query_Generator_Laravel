@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 
 class s2200Controller extends Controller
 {
-    public function generateQuery()
+    public function generateQuery(Request $request)
     {
         //
     }
