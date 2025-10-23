@@ -53,8 +53,7 @@ class s1200Controller extends Controller
             $nrrecibo = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recibo->nrRecibo ?? "null");
         $indapuracao = $this->addQuotesWhenNotNull($evento->indApuracao ?? "null");
         $perapur = $this->addQuotesWhenNotNull($evento->perApur ?? "null");
-        $indguia = null;
-        $tpamb = $this->addQuotesWhenNotNull($evento->tbAmb ?? "null");
+        $tpamb = $this->addQuotesWhenNotNull($evento->tpAmb ?? "null");
         $procemi = $this->addQuotesWhenNotNull($evento->procEmi ?? "null");
         $verproc = $this->addQuotesWhenNotNull($evento->verProc ?? "null");
         $tpinsc = $this->addQuotesWhenNotNull($empregador->tpInsc ?? "null");
@@ -62,6 +61,7 @@ class s1200Controller extends Controller
         $cpftrab = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->ideTrabalhador->cpfTrab ?? "null");
         
         //CAMPOS NULOS
+        $indguia = "null";
         $nmtrab = "null";
         $dtnascto = "null";
         $tpinscsucessaovinc = "null";
@@ -77,7 +77,7 @@ class s1200Controller extends Controller
         $alterado_por = 1;
 
         $query = "INSERT INTO esocial.s1200(idevento, indretif, nrrecibo, indapuracao, perapur, indguia, tpamb, procemi, verproc, tpinsc, nrinsc, cpftrab, nmtrab, dtnascto, tpinscsucessaovinc, nrinscsucessaovinc, matricantsucessaovinc, dtadmsucessaovinc, observacaosucessaovinc, situacao, tipo, criado_por, alterado_por)"
-            . "VALUES ($idevento, $indretif, $nrrecibo, $indapuracao, $perapur, $indguia, $tpamb, $procemi, $verproc, $tpinsc, $nrinsc, $cpftrab, $nmtrab, $dtnascto, $tpinscsucessaovinc, $nrinscsucessaovinc, $matricantsucessaovinc, $dtadmsucessaovinc, $observacaosucessaovinc, $situacao, $tipo, $criado_por, $alterado_por)";
+            . "VALUES ($idevento, $indretif, $nrrecibo, $indapuracao, $perapur, $indguia, $tpamb, $procemi, $verproc, $tpinsc, $nrinsc, $cpftrab, $nmtrab, $dtnascto, $tpinscsucessaovinc, $nrinscsucessaovinc, $matricantsucessaovinc, $dtadmsucessaovinc, $observacaosucessaovinc, $situacao, $tipo, $criado_por, $alterado_por);";
 
         return $query;
     }
@@ -91,17 +91,17 @@ class s1200Controller extends Controller
         $codcateg = $this->addQuotesWhenNotNull($dmDev->codCateg ?? "null");
 
         //CAMPOS NULOS
-        $codcbo = null;
-        $natatividade = null;
-        $qtddiastrab = null;
-        $indrra = null;
+        $codcbo = "null";
+        $natatividade = "null";
+        $qtddiastrab = "null";
+        $indrra = "null";
 
         //CAMPOS FIXOS
         $criado_por = 1;
         $alterado_por = 1;
 
         $query = "INSERT INTO esocial.s1200_dmdev (idedmdev, codcateg, codcbo, natatividade, qtddiastrab, s1200_id, criado_por, alterado_por, indrra)"
-            . "VALUES ($idedmdev, $codcateg, $codcbo, $natatividade, $qtddiastrab, (SELECT id FROM esocial.s1200 s WHERE s.idevento = $idevento), $criado_por, $alterado_por, $indrra)";
+            . "VALUES ($idedmdev, $codcateg, $codcbo, $natatividade, $qtddiastrab, (SELECT id FROM esocial.s1200 s WHERE s.idevento = $idevento LIMIT 1), $criado_por, $alterado_por, $indrra);";
     
         return $query;
     }

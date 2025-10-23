@@ -17,8 +17,10 @@ abstract class Controller
     public function generateHistoricoQuery($xmlObject, $cnpj)
     {
         $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->attributes()['Id'] ?? "null");
+        if ($this->evento = 'S1200')
+            $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->attributes()['Id'] ?? "null");
         $protocolo = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recepcao->protocoloEnvioLote ?? "null");
-        $cnpj = "'" . $cnpj . "'";
+        $cnpj = "'" . str_replace(['.', '-', '/'], '', $cnpj) . "'";
         $nr_recibo = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recibo->nrRecibo ?? "null");
         
         //CAMPOS FIXOS

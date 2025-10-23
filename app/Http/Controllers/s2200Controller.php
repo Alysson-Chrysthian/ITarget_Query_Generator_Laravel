@@ -32,7 +32,7 @@ class s2200Controller extends Controller
                 continue;
 
             $s2200Query = $this->generateS2200Query($xmlObject);
-            $historicoQuery = $this->generateHistoricoQuery($xmlObject, str_replace(['-', '/', '.'], '', $request->cnpj));
+            $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj);
             $s2200DependenteQuery = null;
 
             if ($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->trabalhador->dependente)
@@ -188,7 +188,7 @@ class s2200Controller extends Controller
     public function generateS2200DependenteQuery($xmlObject)
     {
         $dependente = $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->trabalhador->dependente;
-        $matricula = $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->vinculo->matricula;
+        $matricula = "'" . $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->vinculo->matricula . "'";
 
 
         $tpdep = $this->addQuotesWhenNotNull($dependente->tpDep ?? "null");
@@ -206,7 +206,7 @@ class s2200Controller extends Controller
         $alterado_por = 1;
         
         $query = "INSERT INTO esocial.s2200_dependente (tpdep, nmdep, dtnascto, cpfdep, sexodep, depirrf, depsf, inctrab, s2200_id, criado_por, alterado_por, descrdep) "
-            . "VALUES($tpdep, $nmdep, $dtnascto, $cpfdep, $sexodep, $depirrf, $depsf, $inctrab, (SELECT id FROM esocial.s2200 s WHERE s.matricula = '$matricula'), $criado_por, $alterado_por, $descrdep);";
+            . "VALUES($tpdep, $nmdep, $dtnascto, $cpfdep, $sexodep, $depirrf, $depsf, $inctrab, (SELECT id FROM esocial.s2200 s WHERE s.matricula = $matricula), $criado_por, $alterado_por, $descrdep);";
     
         return $query;
     }
