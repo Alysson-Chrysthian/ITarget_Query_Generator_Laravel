@@ -20,6 +20,8 @@ Route::prefix('/s1200')
 
     });
 
+Route::post('/generate-query', [App\Http\Controllers\GenerateQueryController::class, 'generateQuery'])
+    ->name('generate-query');
 
 Route::view('/generate-query', 'generate-query-form')
     ->name('generate-query');

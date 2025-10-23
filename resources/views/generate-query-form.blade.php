@@ -12,6 +12,9 @@
 
         <form
             class="flex flex-col gap-6"
+            method="POST"
+            action="{{ route('generate-query') }}"
+            enctype="multipart/form-data"
         >
             @csrf
             <div class="flex flex-col gap-2">
@@ -20,9 +23,12 @@
                     name="eventName"
                     label="Selecione o evento para ser migrado"
                 >
-                    <option value="S2200">S2200</option>
+                    <option value="S2200" selected>S2200</option>
                     <option value="S1200">S1200</option>
                 </x-select-input>
+                @error('eventName')
+                    <x-error>{{ $message }}</x-error>
+                @enderror
             </div>
             <div class="flex flex-col gap-2">
                 <x-text-input

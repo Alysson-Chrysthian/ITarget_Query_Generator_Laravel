@@ -44,10 +44,7 @@ class s2200Controller extends Controller
             Storage::disk('public')->put('s2200-queries.txt', $queriesFileContent . "\n\n\n" . $queries);
         }
 
-        return back()
-            ->with([
-                'message' => 'Queries geradas com sucesso em storage/s2200-queries.txt'
-            ]);
+        return 'Queries geradas com sucesso em storage/s2200-queries.txt';
     }
 
     public function generateS2200Query($xmlObject)

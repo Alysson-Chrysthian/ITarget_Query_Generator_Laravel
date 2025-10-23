@@ -35,10 +35,7 @@ class s1200Controller extends Controller
             Storage::disk('public')->put('s1200-queries.txt', $queriesFileContent . "\n\n\n" . $queries);
         }
 
-        return back()
-            ->with([
-                'message' => 'Queries geradas com sucesso em /storage/s1200-queries.txt'
-            ]);
+        return 'Queries geradas com sucesso em /storage/s1200-queries.txt';
     }
 
     public function generateS1200Query($xmlObject)
