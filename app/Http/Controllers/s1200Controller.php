@@ -27,7 +27,7 @@ class s1200Controller extends Controller
             $xmlString = file_get_contents($xml->getRealPath());
             $xmlObject = simplexml_load_string($xmlString);
 
-            if (is_array($cpfs) && !in_array($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->trabalhador->cpfTrab, $cpfs))
+            if (is_array($cpfs) && !in_array($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->ideTrabalhador->cpfTrab, $cpfs))
                 continue;
 
             $s1200Query = $this->generateS1200Query($xmlObject);
