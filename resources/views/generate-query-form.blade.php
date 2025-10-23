@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
-@section('title', 's1200')
+@section('title', 's2200')
 
 @section('main')
     <div class="max-w-100 flex flex-col gap-4 m-auto">
-        <h1>s1200</h1>
+        <h1>Gerar query</h1>
 
         <div class="text-green-600">
             {{ session()->get('message') }}
@@ -12,11 +12,18 @@
 
         <form
             class="flex flex-col gap-6"
-            method="POST"
-            action="{{ route('s1200.generate-query') }}"
-            enctype="multipart/form-data"
         >
             @csrf
+            <div class="flex flex-col gap-2">
+                <x-select-input
+                    id="event-name-input"
+                    name="eventName"
+                    label="Selecione o evento para ser migrado"
+                >
+                    <option value="S2200">S2200</option>
+                    <option value="S1200">S1200</option>
+                </x-select-input>
+            </div>
             <div class="flex flex-col gap-2">
                 <x-text-input
                     name="cpfs"
@@ -54,12 +61,5 @@
             </div>
             <x-button>Gerar query</x-button>
         </form>
-
-        <div>
-            <a 
-                href="{{ route('s2200.form') }}"
-                class="text-blue-600 hover:underline hover:text-blue-800"    
-            >Gerar queries do s2200</a>
-        </div>
     </div>
 @endsection
