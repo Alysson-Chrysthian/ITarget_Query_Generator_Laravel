@@ -8,7 +8,12 @@ class s2200Controller extends Controller
 {
     public function generateQuery(Request $request)
     {
-        //
+        $request->validate([
+            'cpfs' => ['nullable'],
+            'cnpj' => ['required'],
+            'xmls' => ['required', 'array'], 
+            'xmls.*' => ['required', 'file'], 
+        ]);
     }
 
     public function generateS2200Query()

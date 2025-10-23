@@ -7,5 +7,4 @@
         placeholder="{{ $attributes->get('placeholder') }}"
         class="p-2 border-1 border-gray-600 rounded-md"
     >
-    <x-error>{{ $attributes->get('error') }}</x-error>
 </div>
