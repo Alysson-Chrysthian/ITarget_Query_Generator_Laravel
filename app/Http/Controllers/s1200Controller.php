@@ -13,14 +13,22 @@ class s1200Controller extends Controller
     public function generateQuery(Request $request)
     {
         $request->validate([
+            'cpfs' => ['nullable', 'string'],
             'xmls' => ['required', 'array'],
             'xmls.*' => ['required', 'file'],
             'cnpj' => ['required', new Cnpj],
         ]);
 
+        $cpfs = $request->cpfs;
+        if (!empty($cpfs))
+            $cpfs = explode(',', str_replace(' ', '', $request->cpfs));
+
         foreach ($request->file('xmls') as $xml) {
             $xmlString = file_get_contents($xml->getRealPath());
             $xmlObject = simplexml_load_string($xmlString);
+
+            if (is_array($cpfs) && !in_array($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->trabalhador->cpfTrab, $cpfs))
+                continue;
 
             $s1200Query = $this->generateS1200Query($xmlObject);
             $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj);
