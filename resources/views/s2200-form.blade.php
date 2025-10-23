@@ -54,4 +54,12 @@
             </div>
             <x-button>Gerar query</x-button>
         </form>
+
+        <div>
+            <a 
+                href="{{ route('s1200.form') }}"
+                class="text-blue-600 hover:underline hover:text-blue-800"
+            >Gerar queries do s1200</a>
+        </div>
     </div>
+@endsection
