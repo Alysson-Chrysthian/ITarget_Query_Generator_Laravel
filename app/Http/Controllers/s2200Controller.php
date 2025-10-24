@@ -186,25 +186,47 @@ class s2200Controller extends Controller
     {
         $dependente = $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->trabalhador->dependente;
         $matricula = "'" . $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->vinculo->matricula . "'";
+        $query = "";
+        $s2200IdQuery = "(SELECT id FROM esocial.s2200 s WHERE s.matricula = $matricula LIMIT 1)";
 
+        if (is_array($dependente)) {
+            foreach ($dependente as $dep) {
+                $tpdep = $this->addQuotesWhenNotNull($dep->tpDep ?? "null");
+                $nmdep = $this->addQuotesWhenNotNull($dep->nmDep ?? "null");
+                $dtnascto = $this->addQuotesWhenNotNull($dep->dtNascto ?? "null");
+                $cpfdep = $this->addQuotesWhenNotNull($dep->cpfDep ?? "null");
+                $sexodep = "null";
+                $descrdep = "null";
+                $depirrf = $this->addQuotesWhenNotNull($dep->depIRRF ?? "null");
+                $depsf = $this->addQuotesWhenNotNull($dep->depSF ?? "null");
+                $inctrab = $this->addQuotesWhenNotNull($dep->incTrab ?? "null");
+                
+                //CAMPOS FIXOS
+                $criado_por = 1;
+                $alterado_por = 1;    
+                
+                $query .= "INSERT INTO esocial.s2200_dependente (tpdep, nmdep, dtnascto, cpfdep, sexodep, depirrf, depsf, inctrab, s2200_id, criado_por, alterado_por, descrdep) "
+                    . "VALUES($tpdep, $nmdep, $dtnascto, $cpfdep, $sexodep, $depirrf, $depsf, $inctrab, $s2200IdQuery, $criado_por, $alterado_por, $descrdep);";
+            }
+        } else {
+            $tpdep = $this->addQuotesWhenNotNull($dependente->tpDep ?? "null");
+            $nmdep = $this->addQuotesWhenNotNull($dependente->nmDep ?? "null");
+            $dtnascto = $this->addQuotesWhenNotNull($dependente->dtNascto ?? "null");
+            $cpfdep = $this->addQuotesWhenNotNull($dependente->cpfDep ?? "null");
+            $sexodep = "null";
+            $descrdep = "null";
+            $depirrf = $this->addQuotesWhenNotNull($dependente->depIRRF ?? "null");
+            $depsf = $this->addQuotesWhenNotNull($dependente->depSF ?? "null");
+            $inctrab = $this->addQuotesWhenNotNull($dependente->incTrab ?? "null");
+            
+            //CAMPOS FIXOS
+            $criado_por = 1;
+            $alterado_por = 1;
+            
+            $query = "INSERT INTO esocial.s2200_dependente (tpdep, nmdep, dtnascto, cpfdep, sexodep, depirrf, depsf, inctrab, s2200_id, criado_por, alterado_por, descrdep) "
+                . "VALUES($tpdep, $nmdep, $dtnascto, $cpfdep, $sexodep, $depirrf, $depsf, $inctrab, $s2200IdQuery, $criado_por, $alterado_por, $descrdep);";
+        }
 
-        $tpdep = $this->addQuotesWhenNotNull($dependente->tpDep ?? "null");
-        $nmdep = $this->addQuotesWhenNotNull($dependente->nmDep ?? "null");
-        $dtnascto = $this->addQuotesWhenNotNull($dependente->dtNascto ?? "null");
-        $cpfdep = $this->addQuotesWhenNotNull($dependente->cpfDep ?? "null");
-        $sexodep = "null";
-        $descrdep = "null";
-        $depirrf = $this->addQuotesWhenNotNull($dependente->depIRRF ?? "null");
-        $depsf = $this->addQuotesWhenNotNull($dependente->depSF ?? "null");
-        $inctrab = $this->addQuotesWhenNotNull($dependente->incTrab ?? "null");
-        
-        //CAMPOS FIXOS
-        $criado_por = 1;
-        $alterado_por = 1;
-        
-        $query = "INSERT INTO esocial.s2200_dependente (tpdep, nmdep, dtnascto, cpfdep, sexodep, depirrf, depsf, inctrab, s2200_id, criado_por, alterado_por, descrdep) "
-            . "VALUES($tpdep, $nmdep, $dtnascto, $cpfdep, $sexodep, $depirrf, $depsf, $inctrab, (SELECT id FROM esocial.s2200 s WHERE s.matricula = $matricula LIMIT 1), $criado_por, $alterado_por, $descrdep);";
-    
         return $query;
     }
 }
