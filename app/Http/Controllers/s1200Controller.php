@@ -31,7 +31,7 @@ class s1200Controller extends Controller
                 continue;
 
             $s1200Query = $this->generateS1200Query($xmlObject);
-            $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj);
+            $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj, $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->attributes()['Id'] ?? "null"));
             $s1200DmDevQuery = null;
 
             if ($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->dmDev)

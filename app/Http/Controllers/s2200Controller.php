@@ -32,7 +32,7 @@ class s2200Controller extends Controller
                 continue;
 
             $s2200Query = $this->generateS2200Query($xmlObject);
-            $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj);
+            $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj, $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->attributes()['Id'] ?? "null"));
             $s2200DependenteQuery = null;
 
             if ($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->trabalhador->dependente)

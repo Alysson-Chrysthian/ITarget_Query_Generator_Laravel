@@ -14,11 +14,8 @@ abstract class Controller
         return $value;
     }
 
-    public function generateHistoricoQuery($xmlObject, $cnpj)
+    public function generateHistoricoQuery($xmlObject, $cnpj, $idevento)
     {
-        $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->attributes()['Id'] ?? "null");
-        if ($this->evento == 'S1200')
-            $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->attributes()['Id'] ?? "null");
         $protocolo = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recepcao->protocoloEnvioLote ?? "null");
         $cnpj = "'" . str_replace(['.', '-', '/'], '', $cnpj) . "'";
         $nr_recibo = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recibo->nrRecibo ?? "null");
