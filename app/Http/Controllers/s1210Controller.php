@@ -78,6 +78,8 @@ class s1210Controller extends Controller {
 
         $query = "INSERT INTO esocial.s1210 (idevento, indretif, nrrecibo, perapur, indguia, tpamb, procemi, verproc, tpinsc, nrinsc, cpfbenef, situacao, tipo, criado_por, alterado_por, dtlaudo)"
             . "VALUES ($idevento, $indretif, $nrrecibo, $perapur, $indguia, $tpamb, $procemi, $verproc, $tpinsc, $nrinsc, $cpfbenef, $situacao, $tipo, $criado_por, $alterado_por, $dtlaudo);";
+        
+        return $query;
     }
 
     public function genearteS1210InfoDepQuery($xmlObject)
