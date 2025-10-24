@@ -90,24 +90,47 @@ class s1200Controller extends Controller
     public function generateS1200DmDevQuery($xmlObject)
     {
         $dmDev = $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->dmDev;
-
         $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->attributes()['Id'] ?? "null");        
-        $idedmdev = $this->addQuotesWhenNotNull($dmDev->ideDmDev ?? "null");
-        $codcateg = $this->addQuotesWhenNotNull($dmDev->codCateg ?? "null");
+        $query = "";
+        $s1200IdQuery = "(SELECT id FROM esocial.s1200 s WHERE s.idevento = $idevento LIMIT 1)";
 
-        //CAMPOS NULOS
-        $codcbo = "null";
-        $natatividade = "null";
-        $qtddiastrab = "null";
-        $indrra = "null";
+        if (is_array($dmDev)) {
+            foreach ($dmDev as $dd) {        
+                $idedmdev = $this->addQuotesWhenNotNull($dd->ideDmDev ?? "null");
+                $codcateg = $this->addQuotesWhenNotNull($dd->codCateg ?? "null");
 
-        //CAMPOS FIXOS
-        $criado_por = 1;
-        $alterado_por = 1;
+                //CAMPOS NULOS
+                $codcbo = "null";
+                $natatividade = "null";
+                $qtddiastrab = "null";
+                $indrra = "null";
 
-        $query = "INSERT INTO esocial.s1200_dmdev (idedmdev, codcateg, codcbo, natatividade, qtddiastrab, s1200_id, criado_por, alterado_por, indrra)"
-            . "VALUES ($idedmdev, $codcateg, $codcbo, $natatividade, $qtddiastrab, (SELECT id FROM esocial.s1200 s WHERE s.idevento = $idevento LIMIT 1), $criado_por, $alterado_por, $indrra);";
-    
+                //CAMPOS FIXOS
+                $criado_por = 1;
+                $alterado_por = 1;
+
+                $query .= "INSERT INTO esocial.s1200_dmdev (idedmdev, codcateg, codcbo, natatividade, qtddiastrab, s1200_id, criado_por, alterado_por, indrra)"
+                    . "VALUES ($idedmdev, $codcateg, $codcbo, $natatividade, $qtddiastrab, $s1200IdQuery, $criado_por, $alterado_por, $indrra);";
+            }
+        }
+        else {
+            $idedmdev = $this->addQuotesWhenNotNull($dmDev->ideDmDev ?? "null");
+            $codcateg = $this->addQuotesWhenNotNull($dmDev->codCateg ?? "null");
+
+            //CAMPOS NULOS
+            $codcbo = "null";
+            $natatividade = "null";
+            $qtddiastrab = "null";
+            $indrra = "null";
+
+            //CAMPOS FIXOS
+            $criado_por = 1;
+            $alterado_por = 1;
+
+            $query = "INSERT INTO esocial.s1200_dmdev (idedmdev, codcateg, codcbo, natatividade, qtddiastrab, s1200_id, criado_por, alterado_por, indrra)"
+                . "VALUES ($idedmdev, $codcateg, $codcbo, $natatividade, $qtddiastrab, $s1200IdQuery, $criado_por, $alterado_por, $indrra);";
+        }
+
         return $query;
     }
 }
