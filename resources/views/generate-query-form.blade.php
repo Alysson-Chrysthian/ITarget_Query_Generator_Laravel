@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 's2200')
+@section('title', 'Gerar query')
 
 @section('main')
     <div class="max-w-100 flex flex-col gap-4 m-auto">
