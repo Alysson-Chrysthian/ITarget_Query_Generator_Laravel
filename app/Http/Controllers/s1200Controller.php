@@ -17,17 +17,31 @@ class s1200Controller extends Controller
             'xmls' => ['required', 'array'],
             'xmls.*' => ['required', 'file'],
             'cnpj' => ['required', new Cnpj],
+            'perApur' => ['nullable'],
         ]);
 
         $cpfs = $request->cpfs;
-        if (!empty($cpfs))
+        if (!empty($cpfs)) {
             $cpfs = explode(',', str_replace(' ', '', $request->cpfs));
+            if (is_string($cpfs))
+                $cpfs = [$cpfs];
+        }
+
+        $perapurs = $request->perApur;
+
+        if (!empty($perapurs)) {
+            $perapurs = explode(',', str_replace(' ', '', $request->perApur));
+            if (is_string($perapurs))
+                $perapurs = [$perapurs];
+        }
 
         foreach ($request->file('xmls') as $xml) {
             $xmlString = file_get_contents($xml->getRealPath());
             $xmlObject = simplexml_load_string($xmlString);
 
             if (is_array($cpfs) && !in_array($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->ideTrabalhador->cpfTrab, $cpfs))
+                continue;
+            if (is_array($perapurs) && !in_array($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtRemun->ideEvento->perApur, $perapurs))
                 continue;
 
             $s1200Query = $this->generateS1200Query($xmlObject);

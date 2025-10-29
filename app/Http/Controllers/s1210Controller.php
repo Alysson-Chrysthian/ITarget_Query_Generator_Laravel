@@ -22,8 +22,11 @@ class s1210Controller extends Controller {
 
         $cpfs = $request->cpfs;
         
-        if (!empty($cpfs))
+        if (!empty($cpfs)) {
             $cpfs = explode(',', str_replace(' ', '', $request->cpfs));
+            if (is_string($cpfs))
+                $cpfs = [$cpfs];
+        }
 
         $perapurs = $request->perApur;
 
