@@ -27,8 +27,11 @@ class s1210Controller extends Controller {
 
         $perapurs = $request->perApur;
 
-        if (!empty($perapur)) 
+        if (!empty($perapurs)) {
             $perapurs = explode(',', str_replace(' ', '', $request->perApur));
+            if (is_string($perapurs))
+                $perapurs = [$perapurs];
+        }
 
         foreach ($request->file('xmls') as $xml) {
             $xmlString = file_get_contents($xml->getRealPath());
