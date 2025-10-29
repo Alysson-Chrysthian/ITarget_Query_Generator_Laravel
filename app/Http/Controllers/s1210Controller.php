@@ -17,6 +17,7 @@ class s1210Controller extends Controller {
             'cnpj' => ['required', new Cnpj],
             'xmls' => ['required', 'array'], 
             'xmls.*' => ['required', 'file'], 
+            'perApur' => ['nullable'],
         ]);
 
         $cpfs = $request->cpfs;
@@ -24,13 +25,20 @@ class s1210Controller extends Controller {
         if (!empty($cpfs))
             $cpfs = explode(',', str_replace(' ', '', $request->cpfs));
 
+        $perapurs = $request->perApur;
+
+        if (!empty($perapur)) 
+            $perapurs = explode(',', str_replace(' ', '', $request->perApur));
+
         foreach ($request->file('xmls') as $xml) {
             $xmlString = file_get_contents($xml->getRealPath());
             $xmlObject = simplexml_load_string($xmlString);   
 
             if (is_array($cpfs) && !in_array($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->ideBenef->cpfBenef, $cpfs))
                 continue;
-            
+            if (is_array($perapurs) && !in_array($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->ideEvento->perApur, $perapurs))
+                continue;
+
             $s1210Query = $this->generateS1210Query($xmlObject);
             $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj, $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->attributes()['Id'] ?? "null"));
             

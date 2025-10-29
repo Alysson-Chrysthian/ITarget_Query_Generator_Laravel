@@ -45,6 +45,18 @@
             </div>
             <div class="flex flex-col gap-2">    
                 <x-text-input
+                    name="perApur"
+                    id="perapur-input"
+                    label="perApur para filtrar os XML's"
+                    value="{{ old('perApur') }}"
+                    placeholder="perApur separados por virgula Ex: 11122233300,11122233300..."
+                />
+                @error('perApur')
+                    <x-error>{{ $message }}</x-error>         
+                @enderror
+            </div>
+            <div class="flex flex-col gap-2">    
+                <x-text-input
                     name="cnpj"
                     id="cnpj-input"
                     label="CNPJ*"
