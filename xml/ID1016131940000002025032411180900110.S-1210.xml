@@ -1,0 +1,177 @@
+<eSocial xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns="http://www.esocial.gov.br/schema/eventoCompleto/retornoEventoCompleto/v1_0_0">
+    <retornoEventoCompleto>
+        <evento>
+            <eSocial xmlns="http://www.esocial.gov.br/schema/evt/evtTSVInicio/v_S_01_03_00">
+                <evtTSVInicio Id="ID1832113750000002025031415135100003">
+                    <ideEvento>
+                        <indRetif>1</indRetif>
+                        <tpAmb>1</tpAmb>
+                        <procEmi>1</procEmi>
+                        <verProc>S_1.3.0</verProc>
+                    </ideEvento>
+                    <ideEmpregador>
+                        <tpInsc>1</tpInsc>
+                        <nrInsc>83211375</nrInsc>
+                    </ideEmpregador>
+                    <trabalhador>
+                        <cpfTrab>89525701204</cpfTrab>
+                        <nmTrab>RAFAELE FONSECA DOS SANTOS SOUZA</nmTrab>
+                        <sexo>F</sexo>
+                        <racaCor>3</racaCor>
+                        <estCiv>2</estCiv>
+                        <grauInstr>09</grauInstr>
+                        <nascimento>
+                            <dtNascto>1985-04-06</dtNascto>
+                            <paisNascto>105</paisNascto>
+                            <paisNac>105</paisNac>
+                        </nascimento>
+                        <endereco>
+                            <brasil>
+                                <dscLograd>RUA JARBAS PASSARINHO</dscLograd>
+                                <nrLograd>35</nrLograd>
+                                <bairro>CENTRO</bairro>
+                                <cep>68527000</cep>
+                                <codMunic>1500131</codMunic>
+                                <uf>PA</uf>
+                            </brasil>
+                        </endereco>
+                        <infoDeficiencia>
+                            <defFisica>N</defFisica>
+                            <defVisual>N</defVisual>
+                            <defAuditiva>N</defAuditiva>
+                            <defMental>N</defMental>
+                            <defIntelectual>N</defIntelectual>
+                            <reabReadap>N</reabReadap>
+                        </infoDeficiencia>
+                        <dependente>
+                            <tpDep>03</tpDep>
+                            <nmDep>PEDRO LEONARDO DOS SANTOS SOUZA</nmDep>
+                            <dtNascto>2017-03-16</dtNascto>
+                            <cpfDep>06103343283</cpfDep>
+                            <depIRRF>S</depIRRF>
+                            <depSF>N</depSF>
+                            <incTrab>N</incTrab>
+                        </dependente>
+                        <dependente>
+                            <tpDep>03</tpDep>
+                            <nmDep>ISABELLE DOS SANTOS SOUZA</nmDep>
+                            <dtNascto>2009-12-10</dtNascto>
+                            <cpfDep>01749334283</cpfDep>
+                            <depIRRF>S</depIRRF>
+                            <depSF>N</depSF>
+                            <incTrab>N</incTrab>
+                        </dependente>
+                        <contato />
+                    </trabalhador>
+                    <infoTSVInicio>
+                        <cadIni>N</cadIni>
+                        <matricula>0011545</matricula>
+                        <codCateg>410</codCateg>
+                        <dtInicio>2025-01-01</dtInicio>
+                        <infoComplementares>
+                            <cargoFuncao>
+                                <nmCargo>SEC MUN DE EDUCACAO</nmCargo>
+                                <CBOCargo>252305</CBOCargo>
+                                <nmFuncao>SEC MUN DE EDUCACAO</nmFuncao>
+                                <CBOFuncao>252305</CBOFuncao>
+                            </cargoFuncao>
+                            <remuneracao>
+                                <vrSalFx>7000</vrSalFx>
+                                <undSalFixo>5</undSalFixo>
+                            </remuneracao>
+                            <infoTrabCedido>
+                                <categOrig>301</categOrig>
+                                <cnpjCednt>22938757000163</cnpjCednt>
+                                <matricCed>990</matricCed>
+                                <dtAdmCed>2014-01-02</dtAdmCed>
+                                <tpRegTrab>2</tpRegTrab>
+                                <tpRegPrev>1</tpRegPrev>
+                            </infoTrabCedido>
+                            <localTrabGeral>
+                                <tpInsc>1</tpInsc>
+                                <nrInsc>83211375000128</nrInsc>
+                                <descComp>PREFEITURA MUNICIPAL DE ABEL FIGUEIREDO</descComp>
+                            </localTrabGeral>
+                        </infoComplementares>
+                    </infoTSVInicio>
+                </evtTSVInicio>
+                <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                    <SignedInfo>
+                        <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+                        <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+                        <Reference URI="">
+                            <Transforms>
+                                <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                                <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+                            </Transforms>
+                            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+                            <DigestValue>CskqeDmrG9ilumw7LMoJY4dvoj/advPGh7rUOxFDnIc=</DigestValue>
+                        </Reference>
+                    </SignedInfo>
+                    <SignatureValue>
+                        B2/GFyd5M1B9aa4yJO2yDzmR9KZrkpxoSrOqox2+oNCVG4gmq4QwtptUyONvMfQ8/yKbYLFg8psDMnnL8SWWAu0Q3F8EyIl3Zx8m0hcpY3T1N0QAPq0Sz+yvVN07502+bdT7J0I202Plru48UgOvi3sXglfhpw5maKOww0s0KfDbfuX0VS0rCyQ8bnrVZ5O7az8ECEu2gQVCFDExAPnfGYKQ3W4DdBWtbI6RHfB6AjvOHtiJxFiGxV1iU1m2UGLDLZy/AmMT56CNHKzyux90E/8Yxt21CYYkI9/s+x3Cd0SuprxdoF7c/8aBHcXMkgiYbtgaGyMqgo+3hu5WLCobsg==
+                    </SignatureValue>
+                    <KeyInfo>
+                        <X509Data>
+                            <X509Certificate>
+                                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
+                            </X509Certificate>
+                        </X509Data>
+                    </KeyInfo>
+                </Signature>
+            </eSocial>
+        </evento>
+        <recibo>
+            <eSocial xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                xmlns="http://www.esocial.gov.br/schema/evt/retornoEvento/v1_2_1">
+                <retornoEvento Id="ID1832113750000002025031415135100003">
+                    <ideEmpregador>
+                        <tpInsc>1</tpInsc>
+                        <nrInsc>83211375</nrInsc>
+                    </ideEmpregador>
+                    <recepcao>
+                        <tpAmb>1</tpAmb>
+                        <dhRecepcao>2025-03-14T12:14:00.703</dhRecepcao>
+                        <versaoAppRecepcao>0.1.0.0</versaoAppRecepcao>
+                        <protocoloEnvioLote>1.1.202503.0000000011396873562</protocoloEnvioLote>
+                    </recepcao>
+                    <processamento>
+                        <cdResposta>201</cdResposta>
+                        <descResposta>Sucesso.</descResposta>
+                        <versaoAppProcessamento>15.7.0</versaoAppProcessamento>
+                        <dhProcessamento>2025-03-14T12:14:02.063</dhProcessamento>
+                    </processamento>
+                    <recibo>
+                        <nrRecibo>1.1.0000000031408799508</nrRecibo>
+                        <hash>CskqeDmrG9ilumw7LMoJY4dvoj/advPGh7rUOxFDnIc=</hash>
+                    </recibo>
+                </retornoEvento>
+                <Signature xmlns="http://www.w3.org/2000/09/xmldsig#">
+                    <SignedInfo>
+                        <CanonicalizationMethod Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+                        <SignatureMethod Algorithm="http://www.w3.org/2001/04/xmldsig-more#rsa-sha256" />
+                        <Reference URI="">
+                            <Transforms>
+                                <Transform Algorithm="http://www.w3.org/2000/09/xmldsig#enveloped-signature" />
+                                <Transform Algorithm="http://www.w3.org/TR/2001/REC-xml-c14n-20010315" />
+                            </Transforms>
+                            <DigestMethod Algorithm="http://www.w3.org/2001/04/xmlenc#sha256" />
+                            <DigestValue>+Alfbq+VS81dcHR+Wj9neN497KXAVecS0Wp4rtvv3/Y=</DigestValue>
+                        </Reference>
+                    </SignedInfo>
+                    <SignatureValue>
+                        JWktwyhI7DE/tGiQKAh87r4dQjJusQWc0xYdLMl2PR9kaMUDUdhCWjJC7PDAaLSViQt51v9PZPmD1seHgKOLsNYnKAGg3SUa/lVaSp2FeYybbiyuFEgGP3+jIA125jL4NQxM2eWIVTrhTlYqe8Gh+7G8Iyqi1iP4yh+N82Q+YZWI+XMgnHGFfKwZ1+P2NRtpgTREv/0fwkktV/B25ENNX6zX1oRo3EJPSnnROt9nEilDY0u2m5vTkzGNzmm06DHVPGz+5S2W4MSwfDtyQDjQlhX3TolBCic2o1jBxBbPgkPhJT8cqBeTXJeDvNRs4u2O98+gyu2Jq240onGuQEaQYw==
+                    </SignatureValue>
+                    <KeyInfo>
+                        <X509Data>
+                            <X509Certificate>
+                                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
+                            </X509Certificate>
+                        </X509Data>
+                    </KeyInfo>
+                </Signature>
+            </eSocial>
+        </recibo>
+    </retornoEventoCompleto>
+</eSocial>

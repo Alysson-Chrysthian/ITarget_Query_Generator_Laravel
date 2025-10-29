@@ -28,19 +28,20 @@ class s1210Controller extends Controller {
             $xmlString = file_get_contents($xml->getRealPath());
             $xmlObject = simplexml_load_string($xmlString);   
 
-            if (is_array($cpfs) && !in_array($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtAdmissao->trabalhador->cpfTrab, $cpfs))
+            if (is_array($cpfs) && !in_array($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->ideBenef->cpfBenef, $cpfs))
                 continue;
             
             $s1210Query = $this->generateS1210Query($xmlObject);
-            $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj, $this->addQuotesWhenNotNull($xmlObject->retornoEventoCompleto->evento->eSocial->evtTSVInicio->attributes()['Id'] ?? "null"));
+            $historicoQuery = $this->generateHistoricoQuery($xmlObject, $request->cnpj, $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->attributes()['Id'] ?? "null"));
+            
             $s1210InfoDepQuery = null;
            
-            if ($xmlObject->retornoEventoCompleto->evento->eSocial->evtTSVInicio->trabalhador->dependente) 
-                $s1210InfoDepQuery = $this->genearteS1210InfoDepQuery($xmlObject);
+            if ($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->ideBenef->infoIRComplem->infoDep) 
+                 $s1210InfoDepQuery = $this->genearteS1210InfoDepQuery($xmlObject);
 
             $queries = $s1210Query . "\n\n" . $historicoQuery . ($s1210InfoDepQuery ? "\n\n" . $s1210InfoDepQuery : "");
 
-            $queriesFileContent = Storage::disk('public')->get('1210-queries.txt');
+            $queriesFileContent = Storage::disk('public')->get('s1210-queries.txt');
             Storage::disk('public')->put('s1210-queries.txt', $queriesFileContent . "\n\n\n" . $queries);
         }
     
@@ -49,23 +50,23 @@ class s1210Controller extends Controller {
 
     public function generateS1210Query($xmlObject)
     {
-        $ideevento = $xmlObject->retornoEventoCompleto->evento->eSocial->evtTSVInicio->ideEvento;
-        $recibo = $xmlObject->retornoEventoCompleto->recibo->eSocial->retornoEvento->recibo;
-        $empregador = $xmlObject->retornoEventoCompleto->evento->eSocial->evtTSVInicio->ideEmpregador;
+        $ideevento = $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->ideEvento;
+        $recibo = $xmlObject->retornoProcessamentoDownload->recibo->eSocial->retornoEvento->recibo;
+        $empregador = $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->ideEmpregador;
 
-        $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoEventoCompleto->evento->eSocial->evtTSVInicio->attributes()['Id'] ?? "null");
+        $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->attributes()['Id'] ?? "null");
         $indretif = $this->addQuotesWhenNotNull($ideevento->indRetif ?? "null");
         $nrrecibo = "null";
-        if ($indretif == 2)
+        if ($indretif == "'2'")
             $nrrecibo = $this->addQuotesWhenNotNull($recibo->nrRecibo ?? "null");
-        $tpamb = $this->addQuotesWhenNotNull($idevento->tpAmb ?? "null");
+        $tpamb = $this->addQuotesWhenNotNull($ideevento->tpAmb ?? "null");
         $procemi = $this->addQuotesWhenNotNull($ideevento->procEmi ?? "null");
         $verproc = $this->addQuotesWhenNotNull($ideevento->verProc ?? "null");
         $tpinsc = $this->addQuotesWhenNotNull($empregador->tpInsc ?? "null");
         $nrinsc = $this->addQuotesWhenNotNull($empregador->nrInsc ?? "null");
-        $cpfbenef = $this->addQuotesWhenNotNull($xmlObject->retornoEventoCompleto->evento->eSocial->evtTSVInicio->trabalhador->cpfTrab ?? "null");
+        $cpfbenef = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->ideBenef->cpfBenef ?? "null");
         $perapur = $this->addQuotesWhenNotNull($ideevento->perApur ?? "null");
-        
+    
         //CAMPOS NULOS
         $indguia = "null";
         $dtlaudo = "null";
@@ -84,8 +85,8 @@ class s1210Controller extends Controller {
 
     public function genearteS1210InfoDepQuery($xmlObject)
     {
-        $dependente = $xmlObject->retornoEventoCompleto->evento->eSocial->evtTSVInicio->trabalhador->dependente;
-        $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoEventoCompleto->evento->eSocial->evtTSVInicio->attributes()['Id'] ?? "null");
+        $dependente = $xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->ideBenef->infoIRComplem->infoDep;
+        $idevento = $this->addQuotesWhenNotNull($xmlObject->retornoProcessamentoDownload->evento->eSocial->evtPgtos->attributes()['Id'] ?? "null");
         
         $query = "";
         $s1210IdQuery = "(SELECT id FROM esocial.s1210 s WHERE s.idevento = $idevento LIMIT 1)";
@@ -94,7 +95,7 @@ class s1210Controller extends Controller {
             foreach ($dependente as $dep) {
                 $cpfdep = $this->addQuotesWhenNotNull($dep->cpfDep ?? "null");
                 $dtnascto = $this->addQuotesWhenNotNull($dep->dtNascto ?? "null");
-                $nome = $this->addQuotesWhenNotNull($dep->nmDep ?? "null");
+                $nome = $this->addQuotesWhenNotNull($dep->nome ?? "null");
                 $depirrf = $this->addQuotesWhenNotNull($dep->depIRRF ?? "null");
                 $tpdep = $this->addQuotesWhenNotNull($dep->tpDep ?? "null");
                 $descrdep = "null";
@@ -107,7 +108,7 @@ class s1210Controller extends Controller {
         } else {    
             $cpfdep = $this->addQuotesWhenNotNull($dependente->cpfDep ?? "null");
             $dtnascto = $this->addQuotesWhenNotNull($dependente->dtNascto ?? "null");
-            $nome = $this->addQuotesWhenNotNull($dependente->nmDep ?? "null");
+            $nome = $this->addQuotesWhenNotNull($dependente->nome ?? "null");
             $depirrf = $this->addQuotesWhenNotNull($dependente->depIRRF ?? "null");
             $tpdep = $this->addQuotesWhenNotNull($dependente->tpDep ?? "null");
             $descrdep = "null";
